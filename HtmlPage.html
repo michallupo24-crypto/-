@@ -1,0 +1,1432 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <title>תיק עבודה – פרויקט שיתוף מזון</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap');
+
+        :root {
+            --green: #27ae60;
+            --dark-green: #1e8449;
+            --light-green: #d5f5e3;
+            --navy: #1a252f;
+            --gray: #ecf0f1;
+            --text: #2c3e50;
+            --code-bg: #1e2d3d;
+            --code-text: #a9d0f5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Assistant', Arial, sans-serif;
+            background: #f0f4f0;
+            color: var(--text);
+            direction: rtl;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* ---- Cover Page ---- */
+        .cover {
+            background: linear-gradient(135deg, var(--green) 0%, var(--dark-green) 60%, #145a32 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 40px;
+            page-break-after: always;
+        }
+
+            .cover .logo-placeholder {
+                width: 110px;
+                height: 110px;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.2);
+                border: 4px solid rgba(255,255,255,0.7);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 48px;
+                margin-bottom: 30px;
+            }
+
+            .cover h1 {
+                font-size: 2.8em;
+                font-weight: 800;
+                margin-bottom: 10px;
+            }
+
+            .cover h2 {
+                font-size: 1.7em;
+                font-weight: 600;
+                margin-bottom: 6px;
+                opacity: 0.9;
+            }
+
+            .cover .subtitle {
+                font-size: 1.2em;
+                opacity: 0.8;
+                margin-bottom: 40px;
+            }
+
+        .cover-info {
+            background: rgba(255,255,255,0.12);
+            border-radius: 12px;
+            padding: 24px 48px;
+            margin-top: 20px;
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+
+            .cover-info p {
+                font-size: 1.1em;
+                margin: 6px 0;
+            }
+
+            .cover-info strong {
+                font-weight: 700;
+            }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 20px;
+            padding: 6px 18px;
+            margin: 6px;
+            font-size: 0.9em;
+        }
+
+        /* ---- Layout ---- */
+        .page {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 60px 50px;
+        }
+
+        /* ---- Chapter Header ---- */
+        .chapter-header {
+            background: linear-gradient(90deg, var(--green), var(--dark-green));
+            color: white;
+            padding: 20px 35px;
+            border-radius: 10px;
+            margin: 50px 0 30px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .chapter-num {
+            background: rgba(255,255,255,0.25);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .chapter-header h2 {
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+
+        /* ---- Section ---- */
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 28px 32px;
+            margin-bottom: 22px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-right: 4px solid var(--green);
+        }
+
+            .section h3 {
+                color: var(--green);
+                font-size: 1.15em;
+                font-weight: 700;
+                margin-bottom: 14px;
+                padding-bottom: 8px;
+                border-bottom: 1px solid #e8f5e9;
+            }
+
+            .section p {
+                margin-bottom: 10px;
+            }
+
+        ul, ol {
+            padding-right: 22px;
+            margin-bottom: 10px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        /* ---- Code Block ---- */
+        .code-block {
+            background: var(--code-bg);
+            color: var(--code-text);
+            border-radius: 8px;
+            padding: 20px 22px;
+            margin: 14px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.82em;
+            line-height: 1.6;
+            direction: ltr;
+            text-align: left;
+            white-space: pre;
+        }
+
+        .code-filename {
+            background: #2c3e50;
+            color: #f1c40f;
+            font-family: monospace;
+            font-size: 0.85em;
+            padding: 6px 14px;
+            border-radius: 6px 6px 0 0;
+            margin-bottom: -6px;
+            display: inline-block;
+        }
+
+        /* ---- Table ---- */
+        table.info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 0.93em;
+        }
+
+            table.info-table th {
+                background: var(--green);
+                color: white;
+                padding: 10px 14px;
+                font-weight: 700;
+                text-align: right;
+            }
+
+            table.info-table td {
+                padding: 9px 14px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+            table.info-table tr:nth-child(even) td {
+                background: #f9f9f9;
+            }
+
+            table.info-table tr:hover td {
+                background: #eafaf1;
+            }
+
+        /* ---- Highlight boxes ---- */
+        .info-box {
+            background: #eafaf1;
+            border: 1px solid #a9dfbf;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 12px 0;
+            font-size: 0.93em;
+        }
+
+        .warn-box {
+            background: #fef9e7;
+            border: 1px solid #f9ca24;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 12px 0;
+            font-size: 0.93em;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--light-green);
+            color: var(--dark-green);
+            border-radius: 12px;
+            padding: 2px 10px;
+            font-size: 0.82em;
+            font-weight: 600;
+            margin: 2px;
+        }
+
+            .tag.red {
+                background: #fde8e8;
+                color: #c0392b;
+            }
+
+            .tag.blue {
+                background: #d6eaf8;
+                color: #1a5276;
+            }
+
+        /* ---- Flow Diagram ---- */
+        .flow {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 16px 0;
+            direction: ltr;
+        }
+
+        .flow-box {
+            background: white;
+            border: 2px solid var(--green);
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 0.85em;
+            font-family: monospace;
+            color: var(--navy);
+            white-space: nowrap;
+        }
+
+        .flow-arrow {
+            color: var(--green);
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .flow-box.db {
+            background: var(--light-green);
+            border-color: var(--dark-green);
+        }
+
+        .flow-box.session {
+            background: #d6eaf8;
+            border-color: #2980b9;
+        }
+
+        /* ---- Page break ---- */
+        @media print {
+            .chapter-header {
+                page-break-before: always;
+            }
+
+            .cover {
+                page-break-after: always;
+            }
+        }
+
+        .divider {
+            border: none;
+            border-top: 2px dashed #d5f5e3;
+            margin: 30px 0;
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dotted #ccc;
+            font-size: 1em;
+        }
+
+            .toc-item a {
+                color: var(--dark-green);
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+        .toc-page {
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .keyword {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .string-literal {
+            color: #27ae60;
+        }
+
+        .comment-code {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    
+    <div class="cover">
+        <div class="logo-placeholder">🏫</div>
+        <h1>פרויקט שיתוף מזון</h1>
+        <h2>FoodShare — לוח מודעות מזון קהילתי</h2>
+        <p class="subtitle">נושא: "ישראל של היום" | תת-נושא: "אוכל בישראל"</p>
+
+        <div class="cover-info">
+            <p><strong>שם התלמידה:</strong> מיכל רחל לופוביץ</p>
+            <p><strong>בית ספר:</strong> תיכון חדש</p>
+            <p><strong>שנת לימודים:</strong> תשפ"ו – 2026</p>
+            <p><strong>מקצוע:</strong> מדעי המחשב – תכנות בסביבת אינטרנט</p>
+            <p><strong>מורה:</strong> ישראל יוסף   </p>
+        </div>
+
+        <div style="margin-top: 28px;">
+            <span class="badge">ASP.NET</span>
+            <span class="badge">C#</span>
+            <span class="badge"> Access</span>
+            <span class="badge">SQL</span>
+            <span class="badge">JavaScript</span>
+            <span class="badge">CSS</span>
+            <span class="badge">XML</span>
+        </div>
+    </div>
+
+    <!-- ==================== תוכן עניינים ==================== -->
+    <div class="page" id="toc">
+        <div class="chapter-header">
+            <div class="chapter-num">📋</div>
+            <h2>תוכן עניינים</h2>
+        </div>
+
+        <div class="section">
+            <div class="toc-item"><a href="#ch1">פרק א׳ – רקע ותיאור הפרויקט</a><span class="toc-page"></span></div>
+            <div class="toc-item"><a href="#ch2">פרק ב׳ – מבנה האתר ומפת הדפים</a><span class="toc-page"></span></div>
+            <div class="toc-item"><a href="#ch3">פרק ג׳ – מסד הנתונים (Access + SQL)</a><span class="toc-page"></span></div>
+            <div class="toc-item"><a href="#ch4">פרק ד׳ – תרשימי זרימה</a><span class="toc-page"></span></div>
+            <div class="toc-item"><a href="#ch5">פרק ה׳ – קוד MasterPage וה-CSS</a><span class="toc-page"></span></div>
+            <div class="toc-item"><a href="#ch6">
+    פרק ו׳ – קוד דפי
+    קוד דפי ASPXו behind code C#
+</a><span class="toc-page"></span></div>
+            <div class="toc-item"><a href="#ch7">פרק ז׳ – JavaScript </a><span class="toc-page"></span></div>
+            <div class="toc-item"><a href="#ch8">פרק ח׳ – XML – קטגוריות וסקר</a><span class="toc-page"></span></div>
+        </div>
+    </div>
+
+    <div class="page" id="ch1">
+        <div class="chapter-header">
+            <div class="chapter-num">א</div>
+            <h2>רקע ותיאור הפרויקט</h2>
+        </div>
+
+        <div class="section">
+            <h3>מדוע בחרתי בנושא?</h3>
+            <p>בחרתי בנושא <strong>שיתוף מזון קהילתי</strong> כי הוא משלב שתי בעיות בוערות בישראל של היום: <strong>יוקר המחייה</strong> ו<strong>בזבוז המזון העצום</strong>. בישראל נזרקות מדי שנה מאות אלפי טונות מזון לפח, בעוד משפחות רבות מתקשות לעמוד בהוצאות האוכל. האתר שלי נותן מענה לשתי הבעיות בבת אחת.</p>
+        </div>
+
+        <div class="section">
+            <h3>קהל היעד</h3>
+            <ul>
+                <li>אנשים שיש להם מזון עודף שפג תוקפו יפוג בקרוב — ורוצים לשתף במקום לזרוק.</li>
+                <li>משפחות ויחידים שמחפשים מוצרי מזון בחינם באזורם.</li>
+                <li>ארגוני צדקה וגמ"חים המעוניינים לרכז תרומות מזון.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>מטרות האתר</h3>
+            <ul>
+                <li>הפחתת כמות המזון הנזרק לפח.</li>
+                <li>יצירת קהילה תומכת המשתפת מוצרים ברחבי הארץ.</li>
+                <li>עזרה לאוכלוסיות שמתקשות כלכלית.</li>
+                <li>מתן כלי חיפוש ופילטור נוח לפי עיר, קטגוריה ותאריך תפוגה.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>סביבת הפיתוח</h3>
+            <table class="info-table">
+                <tr><th>רכיב</th><th>טכנולוגיה / גרסה</th></tr>
+                <tr><td></td><td>Microsoft Visual Studio 2022</td></tr>
+                <tr><td>שפת תכנות שרת</td><td>C# (.NET Framework 4.8.1) – ASP.NET Web Forms</td></tr>
+                <tr><td>מסד נתונים</td><td>Microsoft Access (.accdb) + OleDb</td></tr>
+                <tr><td>שפת שאילתות</td><td>SQL (Jet SQL לגישה ל-Access)</td></tr>
+                <tr><td>עיצוב</td><td>CSS3, Master Page (טבלה 3 עמודות)</td></tr>
+                <tr><td>לקוח (Client)</td><td>JavaScript , HTML</td></tr>
+                <tr><td>קבצי XML</td><td>קטגוריות מזון + תוצאות סקר</td></tr>
+                <tr><td>תמונות האתר</td><td>Canva</td></tr>
+            </table>
+        </div>
+    </div>
+
+  
+    <div class="page" id="ch2">
+        <div class="chapter-header">
+            <div class="chapter-num">ב</div>
+            <h2>מבנה האתר ומפת הדפים</h2>
+        </div>
+
+        <div class="section">
+            <h3>שמות הקבצים ותיקיות הפרויקט</h3>
+            <div class="code-block">
+                FoodShare/
+                ├── HomePage.aspx / .cs         ← דף פתיחה
+                ├── AboutWebsite.aspx / .cs     ← אודות הפרויקט
+                ├── AboutMe.aspx / .cs          ← מפת אתר
+                ├── regestaration.aspx / .cs    ← טופס הרשמה (לקוח חדש)
+                ├── login.aspx / .cs            ← כניסה למערכת
+                ├── logout.aspx / .cs           ← התנתקות
+                ├── FoodBoard.aspx / .cs        ← לוח מודעות + חיפוש SQL
+                ├── AddItem.aspx / .cs          ← הוספת מוצר (לקוח מחובר)
+                ├── EditItem.aspx / .cs         ← עדכון מוצר (בעלים/מנהל)
+                ├── AdminPanel.aspx / .cs       ← ניהול משתמשים (מנהל בלבד)
+                ├── EditUser.aspx / .cs         ← עריכת משתמש (מנהל בלבד)
+                ├── Categories.aspx / .cs       ← גלריית קטגוריות + תמונות מתחלפות
+                ├── Survey.aspx / .cs           ← סקר XML (בונוס)
+                ├── Message.aspx / .cs          ← דף הודעות מערכת
+                ├── MasterPage.master / .cs     ← תבנית ראשית (כל הדפים)
+                ├── StyleSheet.css              ← עיצוב אחיד לכל הדפים
+                ├── Web.config                  ← הגדרות + Connection String
+                └── App_Data/
+                ├── FoodShare.accdb         ← מסד נתונים Access
+                ├── Categories.xml          ← קטגוריות מזון
+                └── Survey.xml              ← תוצאות סקר
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>מפת האתר לפי הרשאות</h3>
+            <table class="info-table">
+                <tr><th>דף</th><th>כתובת</th><th>הרשאה נדרשת</th></tr>
+                <tr><td>דף הבית</td><td>HomePage.aspx</td><td><span class="tag">כולם</span></td></tr>
+                <tr><td>אודות</td><td>AboutWebsite.aspx</td><td><span class="tag">כולם</span></td></tr>
+                <tr><td>מפת אתר</td><td>AboutMe.aspx</td><td><span class="tag">כולם</span></td></tr>
+                <tr><td>הרשמה</td><td>regestaration.aspx</td><td><span class="tag">אורח בלבד</span></td></tr>
+                <tr><td>כניסה</td><td>login.aspx</td><td><span class="tag">אורח בלבד</span></td></tr>
+                <tr><td>לוח מודעות</td><td>FoodBoard.aspx</td><td><span class="tag">כולם</span></td></tr>
+                <tr><td>גלריית קטגוריות</td><td>Categories.aspx</td><td><span class="tag">כולם</span></td></tr>
+                <tr><td>הוספת מוצר</td><td>AddItem.aspx</td><td><span class="tag blue">לקוח מחובר</span></td></tr>
+                <tr><td>עדכון מוצר</td><td>EditItem.aspx</td><td><span class="tag blue">בעלים / מנהל</span></td></tr>
+                <tr><td>סקר</td><td>Survey.aspx</td><td><span class="tag blue">לקוח מחובר</span></td></tr>
+                <tr><td>פאנל מנהל</td><td>AdminPanel.aspx</td><td><span class="tag red">מנהל בלבד</span></td></tr>
+                <tr><td>עריכת משתמש</td><td>EditUser.aspx</td><td><span class="tag red">מנהל בלבד</span></td></tr>
+            </table>
+        </div>
+    </div>
+
+   
+    <div class="page" id="ch3">
+        <div class="chapter-header">
+            <div class="chapter-num">ג</div>
+            <h2>מסד הנתונים – Access + SQL</h2>
+        </div>
+
+        <div class="section">
+            <h3>טבלה 1: Users (משתמשים)</h3>
+            <table class="info-table">
+                <tr><th>שם שדה</th><th>סוג נתון</th><th>הסבר</th></tr>
+                <tr><td>id</td><td>AutoNumber </td><td>מזהה ייחודי</td></tr>
+                <tr><td>FirstName</td><td>Short Text </td><td>שם פרטי</td></tr>
+                <tr><td>LastName</td><td>Short Text </td><td>שם משפחה</td></tr>
+                <tr><td>UserName</td><td>Short Text  </td><td>שם משתמש</td></tr>
+                <tr><td>Email</td><td>Short Text </td><td>כתובת אימייל</td></tr>
+                <tr><td>Password</td><td>Short Text </td><td>סיסמה</td></tr>
+                <tr><td>BirthYear</td><td>Number </td><td>שנת לידה</td></tr>
+                <tr><td>Gender</td><td>Short Text </td><td>מגדר (male/female)</td></tr>
+                <tr><td>PhonePrefix</td><td>Short Text </td><td>קידומת טלפון</td></tr>
+                <tr><td>PhoneNumber</td><td>Short Text </td><td>מספר טלפון</td></tr>
+                <tr><td>City</td><td>Short Text </td><td>עיר מגורים</td></tr>
+                <tr><td>idification</td><td>Short Text </td><td>תעודת זהות</td></tr>
+                <tr><td>isAdmin</td><td>Yes/No</td><td>האם מנהל?</td></tr>
+                <tr><td>loginCount</td><td>Number </td><td>מספר כניסות</td></tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h3>טבלה 2: FoodItems (מוצרי מזון)</h3>
+            <table class="info-table">
+                <tr><th>שם שדה</th><th>סוג נתון</th><th>הסבר</th></tr>
+                <tr><td>ItemID</td><td>AutoNumber </td><td>מזהה מוצר</td></tr>
+                <tr><td>UserID</td><td>Number</td><td>מי פרסם</td></tr>
+                <tr><td>ItemName</td><td>Short Text </td><td>שם המוצר</td></tr>
+                <tr><td>ExpiryDate</td><td>Date/Time</td><td>תאריך תפוגה</td></tr>
+                <tr><td>Quantity</td><td>Number </td><td>כמות</td></tr>
+                <tr><td>Category</td><td>Short Text </td><td>קטגוריה</td></tr>
+                <tr><td>PickupCity</td><td>Short Text </td><td>עיר איסוף</td></tr>
+                <tr><td>PickupLocation</td><td>Short Text </td><td>כתובת מדויקת</td></tr>
+                <tr><td>PostDate</td><td>Date/Time</td><td>תאריך פרסום</td></tr>
+            </table>
+            
+        </div>
+
+        <div class="section">
+            <h3>שאילתות SQL מרכזיות</h3>
+            <p><strong>1. הצגת כל המוצרים (JOIN) + חישוב ימים שנותרו:</strong></p>
+            <div class="code-block">
+                SELECT FoodItems.ItemID, FoodItems.UserID, FoodItems.ItemName,
+                FoodItems.Category, FoodItems.PickupCity, FoodItems.PickupLocation,
+                FoodItems.ExpiryDate, FoodItems.Quantity, Users.UserName,
+                DateDiff('d', Date(), FoodItems.ExpiryDate) AS DaysLeft
+                FROM FoodItems INNER JOIN Users ON FoodItems.UserID = Users.id
+                WHERE FoodItems.ExpiryDate >= Date()
+                ORDER BY FoodItems.ExpiryDate ASC;
+            </div>
+
+            <p><strong>2. חיפוש מסונן לפי עיר, קטגוריה וזמן תפוגה:</strong></p>
+            <div class="code-block">
+                SELECT ... FROM FoodItems INNER JOIN Users ON FoodItems.UserID = Users.id
+                WHERE FoodItems.ExpiryDate >= Date()
+                AND FoodItems.PickupCity = 'Tel Aviv'
+                AND FoodItems.Category = 'פחמימות'
+                AND FoodItems.ExpiryDate <= DateAdd('d', 7, Date())
+                ORDER BY FoodItems.ExpiryDate ASC;
+            </div>
+
+            <p><strong>3. הוספת מוצר (INSERT):</strong></p>
+            <div class="code-block">
+                INSERT INTO FoodItems (UserID, ItemName, ExpiryDate, Quantity,
+                Category, PickupCity, PickupLocation, PostDate)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+            </div>
+
+            <p><strong>4. עדכון מוצר (UPDATE):</strong></p>
+            <div class="code-block">
+                UPDATE FoodItems
+                SET ItemName=?, ExpiryDate=?, Quantity=?, Category=?, PickupCity=?, PickupLocation=?
+                WHERE ItemID=?;
+            </div>
+
+            <p><strong>5. מחיקת מוצר (DELETE):</strong></p>
+            <div class="code-block">DELETE FROM FoodItems WHERE ItemID = 5;</div>
+
+            <p><strong>6. מחיקת משתמש + כל מוצריו:</strong></p>
+            <div class="code-block">
+                DELETE FROM FoodItems WHERE UserID = 12;
+                DELETE FROM Users WHERE id = 12;
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="ch4">
+        <div class="chapter-header">
+            <div class="chapter-num">ד</div>
+            <h2>תרשימי זרימה</h2>
+        </div>
+
+        <div class="section">
+            <h3>תרשים זרימה: הרשמת משתמש חדש</h3>
+            <div style="padding: 10px; background: #fafafa; border-radius: 8px; border: 1px solid #eee;">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 0; direction: ltr;">
+                    <div style="background: #27ae60; color: white; border-radius: 20px; padding: 8px 24px; font-weight: bold;">התחלה</div>
+                    <div style="width: 2px; height: 18px; background: #999;"></div>
+                    <div style="background: #d6eaf8; border: 2px solid #2980b9; border-radius: 6px; padding: 8px 20px; text-align: center; min-width: 220px;">מילוי טופס הרשמה<br /><small>(regestaration.aspx)</small></div>
+                    <div style="width: 2px; height: 18px; background: #999;"></div>
+                    <div style="background: #fef9e7; border: 2px solid #f39c12; border-radius: 6px; padding: 8px 20px; text-align: center; min-width: 220px;">בדיקת JavaScript<br /><small>ת.ז. / שם / שנת לידה</small></div>
+                    <div style="width: 2px; height: 18px; background: #999;"></div>
+                    <div style="background: #fdedec; border: 2px solid #e74c3c; transform: rotate(0deg); padding: 8px 20px; border-radius: 6px; text-align: center; min-width: 220px;">האם שם משתמש תפוס?<br /><small>SELECT FROM Users WHERE UserName=?</small></div>
+                    <div style="display: flex; gap: 40px; align-items: flex-start; margin-top: 8px;">
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div style="font-size: 0.8em; color: #e74c3c; font-weight: bold;">כן ↓</div>
+                            <div style="background: #fdedec; border: 1px solid #e74c3c; border-radius: 6px; padding: 6px 14px; font-size: 0.85em;">הודעת שגיאה</div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div style="font-size: 0.8em; color: #27ae60; font-weight: bold;">לא ↓</div>
+                            <div style="background: #d5f5e3; border: 1px solid #27ae60; border-radius: 6px; padding: 6px 14px; font-size: 0.85em;">INSERT INTO Users</div>
+                        </div>
+                    </div>
+                    <div style="width: 2px; height: 14px; background: #999; margin-top: 8px;"></div>
+                    <div style="background: #d5f5e3; border: 2px solid #27ae60; border-radius: 6px; padding: 8px 20px; text-align: center; min-width: 220px;">הפניה → Message.aspx<br /><small>"נרשמת בהצלחה"</small></div>
+                    <div style="width: 2px; height: 18px; background: #999;"></div>
+                    <div style="background: #27ae60; color: white; border-radius: 20px; padding: 8px 24px; font-weight: bold;">סיום</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>תרשים זרימה: הצגת לוח המודעות עם סינון</h3>
+            <div style="padding: 10px; background: #fafafa; border-radius: 8px; border: 1px solid #eee;">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 0; direction: ltr;">
+                    <div style="background: #27ae60; color: white; border-radius: 20px; padding: 8px 24px; font-weight: bold;">כניסה לדף FoodBoard.aspx</div>
+                    <div style="width: 2px; height: 18px; background: #999;"></div>
+                    <div style="background: #d6eaf8; border: 2px solid #2980b9; border-radius: 6px; padding: 8px 20px; text-align: center; min-width: 260px;">טעינת DropDownLists<br /><small>עיר | קטגוריה (מ-XML) | ימים לתפוגה</small></div>
+                    <div style="width: 2px; height: 18px; background: #999;"></div>
+                    <div style="background: #fef9e7; border: 2px solid #f39c12; border-radius: 6px; padding: 8px 20px; text-align: center; min-width: 260px;">בניית שאילתת SQL<br /><small>WHERE עם פילטרים דינמיים</small></div>
+                    <div style="width: 2px; height: 18px; background: #999;"></div>
+                    <div style="background: #d5f5e3; border: 2px solid #27ae60; border-radius: 6px; padding: 8px 20px; text-align: center; min-width: 260px;">ExecuteDataTable → DataBind<br /><small>גריד mw תוצאות</small></div>
+                    <div style="width: 2px; height: 18px; background: #999;"></div>
+                    <div style="background: #fef9e7; border: 2px solid #e67e22; border-radius: 6px; padding: 8px 20px; text-align: center; min-width: 260px;">הצגת כפתורי עריכה/מחיקה<br /><small>רק אם: CanEdit(UserID)</small></div>
+                    <div style="width: 2px; height: 18px; background: #999;"></div>
+                    <div style="background: #27ae60; color: white; border-radius: 20px; padding: 8px 24px; font-weight: bold;">HTML נשלח לדפדפן</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ 
+    <div class="page" id="ch5">
+        <div class="chapter-header">
+            <div class="chapter-num">ה</div>
+            <h2>קוד MasterPage וה-CSS</h2>
+        </div>
+
+        <div class="section">
+            <h3>Master Page</h3>
+            <p>כל דפי האתר מבוססים על MasterPage.master. הדף מוגדר כ-<strong>טבלה בת 3 עמודות</strong>: עמודת צד שמאל, עמודת תוכן אמצעית (ContentPlaceHolder), ועמודת צד ימין. כך מושג מראה אחיד ולא צריך לחזור על קוד כותרת/ניווט/פוטר בכל דף.</p>
+
+            <div class="code-filename">MasterPage.master</div>
+            <div class="code-block">
+                &lt;%@ Master Language="C#" AutoEventWireup="true"
+                CodeFile="MasterPage.master.cs" Inherits="MasterPage" %&gt;
+                &lt;!DOCTYPE html&gt;
+                &lt;html lang="he" dir="rtl"&gt;
+                &lt;head runat="server"&gt;
+                &lt;meta charset="utf-8" /&gt;
+                &lt;title&gt;שיתוף מזון - FoodShare&lt;/title&gt;
+                &lt;link href="StyleSheet.css" rel="stylesheet" type="text/css" /&gt;
+                &lt;asp:ContentPlaceHolder id="head" runat="server"&gt;&lt;/asp:ContentPlaceHolder&gt;
+                &lt;/head&gt;
+                &lt;body&gt;
+                &lt;form id="form1" runat="server"&gt;
+                &lt;table class="main-table"&gt;
+                &lt;tr&gt;
+                &lt;td colspan="3" class="header"&gt;
+                &lt;h1&gt;פרויקט שיתוף מזון&lt;/h1&gt;
+                &lt;asp:Label ID="lblUserStatus" runat="server"&gt;&lt;/asp:Label&gt;
+                &lt;nav&gt;
+                &lt;asp:HyperLink ID="lnkHome" runat="server"
+                NavigateUrl="HomePage.aspx" Text="דף הבית" /&gt; |
+                &lt;asp:HyperLink ID="lnkAbout" runat="server"
+                NavigateUrl="AboutWebsite.aspx" Text="אודות" /&gt; |
+                &lt;asp:HyperLink ID="lnkBoard" runat="server"
+                NavigateUrl="FoodBoard.aspx" Text="לוח מודעות" /&gt;
+                &lt;!-- קישורים נוספים נראים/נסתרים לפי Session --&gt;
+                &lt;asp:HyperLink ID="lnkAddItem" runat="server"
+                NavigateUrl="AddItem.aspx" Text="הוספת מוצר" Visible="false" /&gt;
+                &lt;asp:HyperLink ID="lnkAdmin" runat="server"
+                NavigateUrl="AdminPanel.aspx" Text="ניהול" Visible="false" /&gt;
+                &lt;asp:HyperLink ID="lnkLogout" runat="server"
+                NavigateUrl="logout.aspx" Text="יציאה" Visible="false" /&gt;
+                &lt;/nav&gt;
+                &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                &lt;td class="side-bar"&gt;&lt;/td&gt;
+                &lt;td class="main-content"&gt;
+                &lt;!-- רק התא האמצעי משתנה מדף לדף --&gt;
+                &lt;asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server"&gt;
+                &lt;/asp:ContentPlaceHolder&gt;
+                &lt;/td&gt;
+                &lt;td class="side-bar"&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                &lt;td colspan="3" class="footer"&gt;
+                צור קשר: &lt;a href="mailto:bagrutprojectfeedback@gmail.com"&gt;
+                bagrutprojectfeedback@gmail.com&lt;/a&gt;
+                &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;/table&gt;
+                &lt;/form&gt;
+                &lt;/body&gt;
+                &lt;/html&gt;
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>קוד עורפי: MasterPage.master.cs – ניהול ניווט דינמי</h3>
+            <div class="code-filename">MasterPage.master.cs</div>
+            <div class="code-block">
+                public partial class MasterPage : System.Web.UI.MasterPage
+                {
+                protected void Page_Load(object sender, EventArgs e)
+                {
+                Response.Charset = "utf-8";
+                Response.ContentEncoding = System.Text.Encoding.UTF8;
+
+                bool loggedIn = UserAuth.IsLoggedIn(Session);
+                bool isAdmin  = UserAuth.IsAdmin(Session);
+
+                // הסתרת כפתורי הרשמה/כניסה כשמחוברים
+                lnkRegister.Visible = !loggedIn;
+                lnkLogin.Visible    = !loggedIn;
+
+                // הצגת כפתורים לאחר כניסה
+                lnkAddItem.Visible  = loggedIn;
+                lnkSurvey.Visible   = loggedIn;
+                lnkLogout.Visible   = loggedIn;
+
+                // הצגת ניהול רק למנהל
+                lnkAdmin.Visible    = isAdmin;
+
+                // הצגת שם + תפקיד + מספר כניסות בכותרת
+                if (loggedIn)
+                {
+                string name  = Session["userName"]?.ToString() ?? "";
+                string role  = isAdmin ? "מנהל" : "לקוח";
+                int    count = GetLoginCount();
+                lblUserStatus.Text = $"שלום, {name} ({role}) | כניסות: {count}";
+                }
+                else
+                {
+                lblUserStatus.Text = "אורח – התחברי כדי להוסיף מוצרים";
+                }
+                }
+
+                private int GetLoginCount()
+                {
+                if (Session["loginCount"] != null)
+                return Convert.ToInt32(Session["loginCount"]);
+                if (Session["UserID"] == null) return 0;
+
+                string sql = "SELECT loginCount FROM Users WHERE id = "
+                + Session["UserID"];
+                DataTable dt = MyAdoHelperAccess.ExecuteDataTable(sql);
+                if (dt.Rows.Count > 0 && dt.Rows[0]["loginCount"] != DBNull.Value)
+                {
+                int c = Convert.ToInt32(dt.Rows[0]["loginCount"]);
+                Session["loginCount"] = c;
+                return c;
+                }
+                return 0;
+                }
+                }
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>StyleSheet.css – עיצוב אחיד</h3>
+            <div class="code-filename">StyleSheet.css</div>
+            <div class="code-block">
+                body {
+                background-color: #f4f7f6;
+                font-family: 'Segoe UI', Arial, sans-serif;
+                margin: 0; padding: 0;
+                direction: rtl;
+                text-align: right;
+                }
+                .header {
+                background-color: #27ae60;
+                color: white;
+                padding: 20px;
+                text-align: center;
+                }
+                nav a {
+                color: white;
+                text-decoration: none;
+                font-weight: bold;
+                margin: 0 10px;
+                }
+                nav a:hover { color: #f1c40f; }
+
+                .main-table { width: 100%; border-collapse: collapse; }
+                .main-content { padding: 20px; vertical-align: top; }
+                .side-bar { width: 5%; }
+
+                .form-container {
+                max-width: 500px;
+                margin: 20px auto;
+                padding: 20px;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                }
+                .grid-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+                .grid-table th, .grid-table td {
+                border: 1px solid #ccc;
+                padding: 8px;
+                text-align: right;
+                }
+                .grid-table th { background-color: #27ae60; color: white; }
+
+                .footer {
+                text-align: center;
+                padding: 20px;
+                background: #2c3e50;
+                color: white;
+                }
+                h2 {
+                color: #27ae60;
+                border-bottom: 2px solid #27ae60;
+                padding-bottom: 10px;
+                }
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="page" id="ch6">
+        <div class="chapter-header">
+            <div class="chapter-num">ו</div>
+            <h2>קוד דפי ASPXו behind code C#</h2>
+        </div>
+
+        <!-- regestaration -->
+        <div class="section">
+            <h3>טופס הרשמה – regestaration.aspx</h3>
+            <div class="code-filename">regestaration.aspx</div>
+            <div class="code-block">
+                &lt;%@ Page Language="C#" MasterPageFile="~/MasterPage.master"
+                AutoEventWireup="true" CodeFile="regestaration.aspx.cs"
+                Inherits="regestaration" %&gt;
+
+                &lt;asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server"&gt;
+                &lt;div class="form-container"&gt;
+                &lt;h2&gt;הרשמת לקוח חדש&lt;/h2&gt;
+
+                &lt;label&gt;שם פרטי:&lt;/label&gt;&lt;br /&gt;
+                &lt;input type="text" id="FirstName" name="FirstName" /&gt;&lt;br /&gt;
+
+                &lt;label&gt;שם משפחה:&lt;/label&gt;&lt;br /&gt;
+                &lt;input type="text" name="LastName" /&gt;&lt;br /&gt;
+
+                &lt;label&gt;שם משתמש:&lt;/label&gt;&lt;br /&gt;
+                &lt;input type="text" name="UserName" /&gt;&lt;br /&gt;
+
+                &lt;label&gt;אימייל:&lt;/label&gt;&lt;br /&gt;
+                &lt;input type="email" name="Email" /&gt;&lt;br /&gt;
+
+                &lt;label&gt;סיסמה:&lt;/label&gt;&lt;br /&gt;
+                &lt;input type="password" name="Password" /&gt;&lt;br /&gt;
+
+                &lt;label&gt;שנת לידה:&lt;/label&gt;&lt;br /&gt;
+                &lt;input type="number" id="BirthYear" name="BirthYear" /&gt;&lt;br /&gt;
+
+                &lt;label&gt;תעודת זהות:&lt;/label&gt;&lt;br /&gt;
+                &lt;input type="text" id="idification" name="idification" maxlength="9" /&gt;&lt;br /&gt;
+
+                &lt;label&gt;מגדר:&lt;/label&gt;&lt;br /&gt;
+                &lt;input type="radio" name="Gender" value="male" checked /&gt; זכר
+                &lt;input type="radio" name="Gender" value="female" /&gt; נקבה&lt;br /&gt;
+
+                &lt;label&gt;קידומת טלפון:&lt;/label&gt;
+                &lt;select name="PhonePrefix"&gt;
+                &lt;option value="050"&gt;050&lt;/option&gt;
+                &lt;option value="052"&gt;052&lt;/option&gt;
+                &lt;option value="054"&gt;054&lt;/option&gt;
+                &lt;/select&gt;
+                &lt;label&gt;מספר:&lt;/label&gt;
+                &lt;input type="text" name="PhoneNumber" maxlength="7" /&gt;&lt;br /&gt;
+
+                &lt;label&gt;עיר מגורים:&lt;/label&gt;&lt;br /&gt;
+                &lt;select name="City"&gt;
+                &lt;option value="Tel Aviv"&gt;תל אביב&lt;/option&gt;
+                &lt;option value="Jerusalem"&gt;ירושלים&lt;/option&gt;
+                &lt;option value="Haifa"&gt;חיפה&lt;/option&gt;
+                &lt;option value="Beersheba"&gt;באר שבע&lt;/option&gt;
+                &lt;/select&gt;&lt;br /&gt;
+
+                &lt;!-- ולידציה JS לפני שליחה --&gt;
+                &lt;input type="submit" name="mySubmit" value="הירשם"
+                onclick="return checkForm()" /&gt;
+                &lt;/div&gt;
+                &lt;!-- פונקציית JavaScript בפרק ח --&gt;
+                &lt;/asp:Content&gt;
+            </div>
+
+            <div class="code-filename">regestaration.aspx.cs</div>
+            <div class="code-block">
+                public partial class regestaration : System.Web.UI.Page
+                {
+                protected void Page_Load(object sender, EventArgs e)
+                {
+                // מניעת הרשמה של מחובר
+                bool loggedAdmin = Session["isAdmin"] != null && (bool)Session["isAdmin"];
+                bool loggedUser  = Session["isUser"]  != null && (bool)Session["isUser"];
+                if (loggedAdmin || loggedUser)
+                {
+                Session["message"] = "אינך יכול להירשם כשאתה מחובר.";
+                Response.Redirect("Message.aspx");
+                return;
+                }
+
+                // בדיקה אם נשלח הטופס
+                if (Request.Form["mySubmit"] == null) return;
+
+                string firstName   = Request.Form["FirstName"];
+                string lastName    = Request.Form["LastName"];
+                string userName    = Request.Form["UserName"];
+                string email       = Request.Form["Email"];
+                string password    = Request.Form["Password"];
+                int    birthYear   = int.Parse(Request.Form["BirthYear"]);
+                string gender      = Request.Form["Gender"];
+                string phonePrefix = Request.Form["PhonePrefix"];
+                string phoneNumber = Request.Form["PhoneNumber"];
+                string city        = Request.Form["City"];
+                string idification = Request.Form["idification"];
+
+                // בדיקת ייחודיות שם משתמש
+                string sqlCheck = $"SELECT UserName FROM Users WHERE UserName = '{userName.Replace("'","''")}'";
+                if (MyAdoHelperAccess.IsExist(sqlCheck))
+                {
+                Session["message"] = "שם משתמש זה תפוס. בחרי שם אחר.";
+                }
+                else
+                {
+                string sqlSignup = string.Format(
+                "INSERT INTO Users ([FirstName],[LastName],[UserName],[Email],[Password]," +
+                "[BirthYear],[Gender],[PhonePrefix],[PhoneNumber],[City],[idification],[isAdmin],[loginCount]) " +
+                "VALUES ('{0}','{1}','{2}','{3}','{4}',{5},'{6}','{7}','{8}','{9}','{10}',No,0)",
+                firstName.Replace("'","''"), lastName.Replace("'","''"),
+                userName.Replace("'","''"), email.Replace("'","''"),
+                password.Replace("'","''"), birthYear,
+                gender, phonePrefix, phoneNumber,
+                city, idification.Replace("'","''"));
+
+                MyAdoHelperAccess.ExecuteNonQuery(sqlSignup);
+                Session["message"] = "ברוכים הבאים! נרשמת בהצלחה.";
+                }
+                Session["message"] += "&lt;br/&gt;&lt;a href='login.aspx'&gt;להתחברות&lt;/a&gt;";
+                Response.Redirect("Message.aspx");
+                }
+                }
+            </div>
+        </div>
+
+        <!-- login -->
+        <div class="section">
+            <h3>כניסה למערכת – login.aspx.cs</h3>
+            <div class="code-filename">login.aspx.cs</div>
+            <div class="code-block">
+                public partial class login : System.Web.UI.Page
+                {
+                protected void Page_Load(object sender, EventArgs e)
+                {
+                // אם כבר מחובר – לא ניתן להתחבר שוב
+                bool loggedAdmin = Session["isAdmin"] != null && (bool)Session["isAdmin"];
+                bool loggedUser  = Session["isUser"]  != null && (bool)Session["isUser"];
+                if (loggedAdmin || loggedUser)
+                {
+                Session["message"] = "אינך יכולה להתחבר כשאת כבר מחוברת.";
+                Response.Redirect("Message.aspx");
+                return;
+                }
+
+                if (Request.Form["mySubmit"] == null) return;
+
+                string userName = Request.Form["UserName"];
+                string password = Request.Form["Password"];
+
+                string sql = string.Format(
+                "SELECT UserName, isAdmin, id, loginCount FROM Users " +
+                "WHERE (UserName = '{0}' AND Password = '{1}')",
+                userName.Replace("'","''"), password.Replace("'","''"));
+
+                bool found = MyAdoHelperAccess.IsExist(sql);
+
+                if (found)
+                {
+                DataTable dt = MyAdoHelperAccess.ExecuteDataTable(sql);
+                bool isAdmin = Convert.ToBoolean(dt.Rows[0]["isAdmin"]);
+                int  userId  = Convert.ToInt32(dt.Rows[0]["id"]);
+                int  oldCount = dt.Rows[0]["loginCount"] != DBNull.Value
+                ? Convert.ToInt32(dt.Rows[0]["loginCount"]) : 0;
+                int  newCount = oldCount + 1;
+
+                // עדכון מונה כניסות
+                MyAdoHelperAccess.ExecuteNonQuery(
+                $"UPDATE Users SET loginCount = {newCount} WHERE id = {userId}");
+
+                // שמירה ב-Session
+                Session["userName"]   = userName;
+                Session["UserID"]     = userId.ToString();
+                Session["loginCount"] = newCount;
+                Session["isAdmin"]    = isAdmin;
+                Session["isUser"]     = !isAdmin;
+
+                Session["message"] = $"ההתחברות הצליחה! זו כניסה מספר {newCount}.";
+                }
+                else
+                {
+                Session["isUser"]  = false;
+                Session["isAdmin"] = false;
+                Session["message"] = "שם משתמש או סיסמה שגויים.";
+                }
+
+                Response.Redirect("Message.aspx");
+                }
+                }
+            </div>
+        </div>
+
+        <!-- FoodBoard -->
+        <div class="section">
+            <h3>לוח מודעות – FoodBoard.aspx + .cs</h3>
+            <div class="code-filename">FoodBoard.aspx</div>
+            <div class="code-block">
+                &lt;asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server"&gt;
+                &lt;h2&gt;לוח שיתוף המזון&lt;/h2&gt;
+                &lt;div class="form-container"&gt;
+                &lt;label&gt;עיר איסוף:&lt;/label&gt;
+                &lt;asp:DropDownList ID="ddlCity" runat="server"&gt;&lt;/asp:DropDownList&gt;
+
+                &lt;label&gt;קטגוריה:&lt;/label&gt;
+                &lt;asp:DropDownList ID="ddlCategory" runat="server"&gt;&lt;/asp:DropDownList&gt;
+
+                &lt;label&gt;פג תוקף תוך:&lt;/label&gt;
+                &lt;asp:DropDownList ID="ddlExpiry" runat="server"&gt;
+                &lt;asp:ListItem Value="" Text="הכל" /&gt;
+                &lt;asp:ListItem Value="3" Text="3 ימים" /&gt;
+                &lt;asp:ListItem Value="7" Text="7 ימים" /&gt;
+                &lt;asp:ListItem Value="14" Text="14 יום" /&gt;
+                &lt;asp:ListItem Value="30" Text="30 יום" /&gt;
+                &lt;/asp:DropDownList&gt;
+
+                &lt;asp:Button ID="btnSearch" runat="server" Text="סנן" OnClick="btnSearch_Click" /&gt;
+                &lt;asp:Button ID="btnShowAll" runat="server" Text="הצג הכל" OnClick="btnShowAll_Click" /&gt;
+                &lt;/div&gt;
+
+                &lt;asp:GridView ID="gvItems" runat="server" AutoGenerateColumns="False"
+                CssClass="grid-table" DataKeyNames="ItemID"
+                OnRowCommand="gvItems_RowCommand" EmptyDataText="לא נמצאו מוצרים."&gt;
+                &lt;Columns&gt;
+                &lt;asp:BoundField DataField="ItemName"      HeaderText="שם המוצר" /&gt;
+                &lt;asp:BoundField DataField="Category"      HeaderText="קטגוריה" /&gt;
+                &lt;asp:BoundField DataField="PickupCity"    HeaderText="עיר איסוף" /&gt;
+                &lt;asp:BoundField DataField="PickupLocation" HeaderText="כתובת" /&gt;
+                &lt;asp:BoundField DataField="ExpiryDate"    HeaderText="תפוגה"
+                DataFormatString="{0:dd/MM/yyyy}" /&gt;
+                &lt;asp:BoundField DataField="DaysLeft"      HeaderText="ימים שנותרו" /&gt;
+                &lt;asp:BoundField DataField="Quantity"      HeaderText="כמות" /&gt;
+                &lt;asp:BoundField DataField="UserName"      HeaderText="מפרסם" /&gt;
+                &lt;asp:TemplateField HeaderText="פעולות"&gt;
+                &lt;ItemTemplate&gt;
+                &lt;asp:HyperLink runat="server"
+                NavigateUrl='&lt;%# "EditItem.aspx?id=" + Eval("ItemID") %&gt;'
+                Text="עריכה"
+                Visible='&lt;%# CanEdit(Eval("UserID")) %&gt;' /&gt;
+                &lt;asp:Button runat="server" Text="מחיקה"
+                CommandName="DeleteItem"
+                CommandArgument='&lt;%# Eval("ItemID") %&gt;'
+                Visible='&lt;%# CanEdit(Eval("UserID")) %&gt;'
+                OnClientClick="return confirm('למחוק את המוצר?');" /&gt;
+                &lt;/ItemTemplate&gt;
+                &lt;/asp:TemplateField&gt;
+                &lt;/Columns&gt;
+                &lt;/asp:GridView&gt;
+                &lt;/asp:Content&gt;
+            </div>
+
+            <div class="code-filename">FoodBoard.aspx.cs – הפונקציות המרכזיות</div>
+            <div class="code-block">
+                // בניית SQL דינמי לפי הסינונים שנבחרו
+                private string BuildSearchSql()
+                {
+                string sql = @"SELECT FoodItems.ItemID, FoodItems.UserID,
+                FoodItems.ItemName, FoodItems.Category,
+                FoodItems.PickupCity, FoodItems.PickupLocation,
+                FoodItems.ExpiryDate, FoodItems.Quantity,
+                Users.UserName,
+                DateDiff('d', Date(), FoodItems.ExpiryDate) AS DaysLeft
+                FROM FoodItems INNER JOIN Users ON FoodItems.UserID = Users.id
+                WHERE FoodItems.ExpiryDate >= Date()";
+
+                if (ddlCity.SelectedValue != "")
+                sql += " AND FoodItems.PickupCity = '"
+                + ddlCity.SelectedValue.Replace("'","''") + "'";
+
+                if (ddlCategory.SelectedValue != "")
+                sql += " AND FoodItems.Category = '"
+                + ddlCategory.SelectedValue.Replace("'","''") + "'";
+
+                if (ddlExpiry.SelectedValue != "")
+                {
+                int days = Convert.ToInt32(ddlExpiry.SelectedValue);
+                sql += $" AND FoodItems.ExpiryDate <= DateAdd('d', {days}, Date())";
+                }
+
+                sql += " ORDER BY FoodItems.ExpiryDate ASC";
+                return sql;
+                }
+
+                // בדיקת הרשאת עריכה/מחיקה לשורה מסוימת
+                public bool CanEdit(object itemUserId)
+                {
+                if (!UserAuth.IsLoggedIn(Session)) return false;
+                if (UserAuth.IsAdmin(Session)) return true;
+                return Session["UserID"].ToString() == itemUserId.ToString();
+                }
+
+                // טיפול במחיקה מהגריד
+                protected void gvItems_RowCommand(object sender, GridViewCommandEventArgs e)
+                {
+                if (e.CommandName != "DeleteItem") return;
+                if (!UserAuth.IsLoggedIn(Session))
+                {
+                Response.Redirect("login.aspx?returnUrl=FoodBoard.aspx");
+                return;
+                }
+                int itemId = Convert.ToInt32(e.CommandArgument);
+                MyAdoHelperAccess.ExecuteNonQuery("DELETE FROM FoodItems WHERE ItemID = " + itemId);
+                lblMessage.Text = "המוצר נמחק.";
+                LoadItems(BuildSearchSql());
+                }
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>הוספת מוצר – AddItem.aspx.cs</h3>
+            <div class="code-filename">AddItem.aspx.cs</div>
+            <div class="code-block">
+                public partial class AddItem : System.Web.UI.Page
+                {
+                protected void Page_Load(object sender, EventArgs e)
+                {
+                // הגנה: רק מחובר יכול להוסיף מוצר
+                UserAuth.RequireLogin(Session, "AddItem.aspx");
+
+                if (!IsPostBack)
+                LoadCategoriesFromXml();  // טעינת קטגוריות מ-XML
+                }
+
+                private void LoadCategoriesFromXml()
+                {
+                string xmlPath = Server.MapPath("~/App_Data/Categories.xml");
+                XmlDocument doc = new XmlDocument();
+                using (StreamReader reader = new StreamReader(xmlPath, Encoding.UTF8))
+                doc.Load(reader);
+
+                ddlCategory.Items.Clear();
+                foreach (XmlNode node in doc.SelectNodes("//Category"))
+                ddlCategory.Items.Add(node.InnerText);
+                }
+
+                protected void btnAdd_Click(object sender, EventArgs e)
+                {
+                string sql = @"INSERT INTO FoodItems
+                (UserID, ItemName, ExpiryDate, Quantity, Category, PickupCity, PickupLocation, PostDate)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+                using (OleDbConnection conn = new OleDbConnection(
+                MyAdoHelperAccess.GetConnectionString()))
+                {
+                conn.Open();
+                OleDbCommand cmd = new OleDbCommand(sql, conn);
+                cmd.Parameters.Add(new OleDbParameter("UserID",
+                OleDbType.Integer) { Value = Convert.ToInt32(Session["UserID"]) });
+                cmd.Parameters.Add(new OleDbParameter("ItemName",
+                OleDbType.VarWChar) { Value = txtItemName.Text.Trim() });
+                cmd.Parameters.Add(new OleDbParameter("ExpiryDate",
+                OleDbType.Date) { Value = DateTime.Parse(txtExpiry.Text) });
+                cmd.Parameters.Add(new OleDbParameter("Quantity",
+                OleDbType.Integer) { Value = Convert.ToInt32(txtQuantity.Text) });
+                cmd.Parameters.Add(new OleDbParameter("Category",
+                OleDbType.VarWChar) { Value = ddlCategory.SelectedValue });
+                cmd.Parameters.Add(new OleDbParameter("PickupCity",
+                OleDbType.VarWChar) { Value = ddlCity.SelectedValue });
+                cmd.Parameters.Add(new OleDbParameter("PickupLocation",
+                OleDbType.VarWChar) { Value = txtLocation.Text.Trim() });
+                cmd.Parameters.Add(new OleDbParameter("PostDate",
+                OleDbType.Date) { Value = DateTime.Now });
+                cmd.ExecuteNonQuery();
+                }
+
+                lblMessage.ForeColor = System.Drawing.Color.Green;
+                lblMessage.Text = "המוצר פורסם בהצלחה!";
+                txtItemName.Text = txtQuantity.Text = txtLocation.Text = "";
+                }
+                }
+            </div>
+        </div>
+
+        <!-- AdminPanel -->
+        <div class="section">
+            <h3>פאנל מנהל – AdminPanel.aspx.cs</h3>
+            <div class="code-filename">AdminPanel.aspx.cs</div>
+            <div class="code-block">
+                public partial class AdminPanel : System.Web.UI.Page
+                {
+                protected void Page_Load(object sender, EventArgs e)
+                {
+                // הגנה כפולה: צריך להיות מחובר וגם מנהל
+                UserAuth.RequireLogin(Session, "AdminPanel.aspx");
+                UserAuth.RequireAdmin(Session);
+
+                if (!IsPostBack)
+                LoadUsers();
+                }
+
+                private void LoadUsers()
+                {
+                string sql = "SELECT id, UserName, FirstName, LastName, Email, " +
+                "City, isAdmin, loginCount FROM Users ORDER BY id";
+                gvUsers.DataSource = MyAdoHelperAccess.ExecuteDataTable(sql);
+                gvUsers.DataBind();
+                }
+
+                protected void gvUsers_RowCommand(object sender, GridViewCommandEventArgs e)
+                {
+                if (e.CommandName != "DelUser") return;
+
+                int userId = Convert.ToInt32(e.CommandArgument);
+                // מחיקת כל המוצרים של המשתמש לפני מחיקתו
+                MyAdoHelperAccess.ExecuteNonQuery("DELETE FROM FoodItems WHERE UserID = " + userId);
+                MyAdoHelperAccess.ExecuteNonQuery("DELETE FROM Users WHERE id = " + userId);
+
+                lblMessage.Text = "המשתמש נמחק בהצלחה.";
+                LoadUsers();
+                }
+                }
+            </div>
+        </div>
+    </div>
+
+  
+    <div class="page" id="ch7">
+        <div class="chapter-header">
+            <div class="chapter-num">ז</div>
+            <h2>JavaScript  </h2>
+        </div>
+
+        <div class="section">
+            <h3>פונקציות אימות טופס הרשמה (regestaration.aspx)</h3>
+            <div class="code-block">
+                function checkForm() {
+                var id       = document.getElementById("idification").value;
+                var name     = document.getElementById("FirstName").value;
+                var year     = parseInt(document.getElementById("BirthYear").value);
+
+                // בדיקת תעודת זהות: בדיוק 9 ספרות מספריות
+                if (id.length !== 9 || isNaN(id)) {
+                alert("תעודת זהות חייבת להכיל 9 ספרות!");
+                return false;
+                }
+
+                // בדיקת שם: אותיות בלבד (עברית או לועזית)
+                if (!/^[A-Za-z\u0590-\u05FF]+$/.test(name)) {
+                alert("שם פרטי חייב להכיל אותיות בלבד!");
+                return false;
+                }
+
+                // בדיקת גיל הגיוני (לא לידה לפני 1900, לא עתידי)
+                if (year &lt; 1900 || year > 2026) {
+                alert("שנת לידה לא הגיונית! (1900–2026)");
+                return false;
+                }
+
+                return true;  // כל הבדיקות עברו – שלח טופס
+                }
+            </div>
+            <div class="info-box">
+                <strong>אירוע בשימוש:</strong> <code>onclick</code> על כפתור ה-submit — הפונקציה מוחזרת כ-<code>return checkForm()</code>. אם מחזירה false, הטופס לא נשלח.
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>אנימציית לוגו של בית הספר + אירוע קליק על כותרת (HomePage.aspx)</h3>
+            <div class="code-block">
+                var logo  = document.getElementById("logoImg");
+                var title = document.getElementById("mainTitle");
+
+                // הגדלת לוגו בריחוף (onmouseover / onmouseout)
+                logo.onmouseover = function() {
+                this.style.width  = "200px";
+                this.style.cursor = "pointer";
+                };
+                logo.onmouseout = function() {
+                this.style.width = "150px";
+                };
+
+                // שינוי כותרת בלחיצה (onclick)
+                title.onclick = function() {
+                this.style.color   = "blue";
+                this.innerHTML     = "תודה שלחצת על הכותרת!";
+                };
+            </div>
+            <div class="info-box">
+                <strong>אירועים בשימוש:</strong> <code>onmouseover</code>, <code>onmouseout</code>, <code>onclick</code>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>תמונות מתחלפות + גלריית קטגוריות (Categories.aspx)</h3>
+            <div class="code-block">
+                var images     = ["bread.jpg", "vegetables.jpg", "dairy.jpg"];
+                var categories = ["פחמימות", "ירקות ופירות", "מוצרי חלב"];
+                var i          = 0;
+
+                var imgElement = document.getElementById("gallery");
+
+                // החלפת תמונה כל 2.5 שניות – setInterval
+                setInterval(function() {
+                i = (i + 1) % images.length;          // מחזור מעגלי
+                imgElement.src = "Images/" + images[i];
+                }, 2500);
+
+                // לחיצה על התמונה – מסנן לפי קטגוריה נוכחית
+                imgElement.onclick = function() {
+                window.location.href = "FoodBoard.aspx?cat=" + categories[i];
+                };
+            </div>
+            <div class="info-box">
+                <strong>פונקציות/אירועים:</strong> <code>setInterval</code> לתמונות מתחלפות | <code>onclick</code> לניווט לקטגוריה | <code>window.location.href</code> לניתוב
+            </div>
+        </div>
+    </div>
+
+
+    <div class="page" id="ch8">
+        <div class="chapter-header">
+            <div class="chapter-num">ח</div>
+            <h2>XML – קטגוריות מזון וסקר</h2>
+        </div>
+
+        <div class="section">
+            <h3>Categories.xml – מאגר קטגוריות</h3>
+           <div class="code-filename">App_Data/Categories.xml</div>
+            <div class="code-block">
+                &lt;?xml version="1.0" encoding="utf-8"?&gt;
+                &lt;Categories&gt;
+                &lt;Category&gt;פחמימות&lt;/Category&gt;
+                &lt;Category&gt;ירקות ופירות&lt;/Category&gt;
+                &lt;Category&gt;מוצרי חלב&lt;/Category&gt;
+                &lt;Category&gt;חלבונים&lt;/Category&gt;
+                &lt;Category&gt;שתייה&lt;/Category&gt;
+                &lt;Category&gt;שימורים&lt;/Category&gt;
+                &lt;Category&gt;ממתקים&lt;/Category&gt;
+                &lt;/Categories&gt;
+            </div>
+            <p><strong>קריאה ב-C# (XmlDocument):</strong></p>
+            <div class="code-block">
+                XmlDocument doc = new XmlDocument();
+                doc.Load(Server.MapPath("~/App_Data/Categories.xml"));
+                foreach (XmlNode node in doc.SelectNodes("//Category"))
+                ddlCategory.Items.Add(node.InnerText);
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Survey.xml – תוצאות הסקר (בונוס)</h3>
+            <p>כל תשובה נשמרת כ-XML. מאפשר הצגת סיכום ללא מסד נתונים נוסף.</p>
+            <div class="code-filename">App_Data/Survey.xml </div>
+            <div class="code-block">
+                &lt;?xml version="1.0" encoding="utf-8"?&gt;
+                &lt;SurveyResults&gt;
+                &lt;Response&gt;
+                &lt;UserID&gt;3&lt;/UserID&gt;
+                &lt;Answer&gt;כן מאוד&lt;/Answer&gt;
+                &lt;/Response&gt;
+                &lt;Response&gt;
+                &lt;UserID&gt;7&lt;/UserID&gt;
+                &lt;Answer&gt;במידה מסוימת&lt;/Answer&gt;
+                &lt;/Response&gt;
+                &lt;/SurveyResults&gt;
+            </div>
+            <p><strong>קריאה ב-C# (LINQ to XML):</strong></p>
+            <div class="code-block">
+                XDocument doc = XDocument.Load(path);
+                var results = doc.Descendants("Response")
+                .GroupBy(r => r.Element("Answer").Value)
+                .Select(g => new { Answer = g.Key, Count = g.Count() });
+
+                string html = "&lt;table border='1'&gt;";
+                foreach (var r in results)
+                html += $"&lt;tr&gt;&lt;td&gt;{r.Answer}&lt;/td&gt;&lt;td&gt;{r.Count}&lt;/td&gt;&lt;/tr&gt;";
+                html += "&lt;/table&gt;";
+            </div>
+        </div>
+    </div>
+
+ 
+
+    <div style="background: linear-gradient(135deg, #1e8449, #27ae60); color: white; padding: 60px 40px; text-align: center; margin-top: 40px; min-height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        
+        <p style="font-size: 1.1em; opacity: 0.9;">פרויקט שיתוף מזון – FoodShare | מיכל רחל לופוביץ | תיכון חדש | 2026</p>
+
+    </div>
+
+</body>
+</html>
